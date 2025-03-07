@@ -1,6 +1,6 @@
 # EyeScroll
 
-Hands free scrolling controlled with your eyes. Sit back and relax and have fun reading!
+Hands free scrolling controlled with your eyes. Sit back and relax and have fun reading! Once running, it works on any webpage or application that has scrolling.
 
 ## How to Use
 
