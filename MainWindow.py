@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel
+from PyQt5.QtWidgets import QMainWindow, QPushButton, QVBoxLayout, QWidget, QLabel
 from PyQt5.QtGui import QImage, QPixmap
 import cv2
 import threading
@@ -9,8 +9,6 @@ class MainWindow(QMainWindow):
         self.eye_tracker = eye_tracker
         self.scroller = scroller
         self.tracking = False
-        self.latest_frame = None
-
         self.init_ui()
 
     def init_ui(self):
@@ -36,9 +34,10 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(container)
 
     def start_tracking(self):
+        print("Start tracking button clicked")
         if not self.tracking:
             self.tracking = True
-            threading.Thread(target=self.run_tracking).start()
+            threading.Thread(target=self.run_tracking, daemon=True).start()
 
     def stop_tracking(self):
         self.tracking = False
@@ -52,12 +51,12 @@ class MainWindow(QMainWindow):
                 print("Failed to capture video frame.")
                 break
 
-            # Process frame for eye tracking
-            eyes_open = self.eye_tracker.process_frame(frame)
-            print(f"Eyes Open: {eyes_open}")  # Debugging output
+            # Process frame to get gaze direction
+            direction = self.eye_tracker.process_frame(frame)
+            print(f"Gaze Direction: {direction}")
 
-            if eyes_open:
-                self.scroller.start_scrolling()
+            if direction != "none":
+                self.scroller.start_scrolling(direction)
             else:
                 self.scroller.stop_scrolling()
 
@@ -66,15 +65,9 @@ class MainWindow(QMainWindow):
         cap.release()
         cv2.destroyAllWindows()
 
-    def start_tracking(self):
-        print("Start tracking button clicked")  # Debugging message
-        if not self.tracking:
-            self.tracking = True
-            threading.Thread(target=self.run_tracking, daemon=True).start()
-
     def update_video_feed(self, frame):
-        # Convert OpenCV frame to QImage for PyQt display
         rgb_image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         height, width, channel = rgb_image.shape
-        qimg = QImage(rgb_image.data, width, height, width * channel, QImage.Format_RGB888)
+        bytes_per_line = width * channel
+        qimg = QImage(rgb_image.data, width, height, bytes_per_line, QImage.Format_RGB888)
         self.video_label.setPixmap(QPixmap.fromImage(qimg))
