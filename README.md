@@ -1,6 +1,6 @@
 # EyeScroll
 
-Hands free scrolling controlled with your eyes. Sit back and relax to read.
+Hands free scrolling controlled with your eyes. Sit back and relax and have fun reading!
 
 ## How to Use
 
