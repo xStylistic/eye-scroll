@@ -18,7 +18,7 @@ class EyeTracker:
     """
     def __init__(self, up_threshold=0.42, down_threshold=0.56):
 ```
-Run the program and it in the terminal it will show your eye ratio when it detects up, down, and neutral. Adjust based on the ratios detected.
+Run the program and in the terminal, it will show your eye ratio when it detects scroll up, down, and neutral. Adjust based on the ratios detected.
 
 Squint eyes to scroll down faster, open eyes wider to scroll up faster. 
 
