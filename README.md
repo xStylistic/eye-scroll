@@ -4,8 +4,9 @@ Hands free scrolling controlled with your eyes. Sit back and relax and have fun 
 
 ## How to Use
 
-1. Make sure you have a working webcam. 
-2. Clone the repo and run in Main.py. 
+1. Make sure you have a working webcam.
+2. Make sure you have a working Python IDE 
+3. Clone the repo and run in Main.py. 
 
 ## Usage
 
